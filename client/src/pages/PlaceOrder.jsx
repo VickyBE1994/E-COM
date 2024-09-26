@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
 import { assets } from "../assets/assets";
+import axios from "axios";
+import { toast } from "react-toastify";
 import { ShopContext } from "../context/ShopContext";
 
 const PlaceOrder = () => {
@@ -43,6 +45,7 @@ const onSubmitHandler = async (event) => {
               }
           }
       }
+console.log(orderItems)
 
       let orderData = {
           address: formData,
@@ -74,14 +77,14 @@ const onSubmitHandler = async (event) => {
               }
               break;
 
-          case 'razorpay':
+          // case 'razorpay':
 
-              const responseRazorpay = await axios.post(backendUrl + '/api/order/razorpay', orderData, {headers:{token}})
-              if (responseRazorpay.data.success) {
-                  initPay(responseRazorpay.data.order)
-              }
+          //     const responseRazorpay = await axios.post(backendUrl + '/api/order/razorpay', orderData, {headers:{token}})
+          //     if (responseRazorpay.data.success) {
+          //         initPay(responseRazorpay.data.order)
+          //     }
 
-              break;
+          //     break;
 
           default:
               break;
@@ -203,10 +206,7 @@ const onSubmitHandler = async (event) => {
               <p className={`min-w-3.5 h-3.5 border rounded-full ${method === 'stripe' ? 'bg-green-400' : ''}`}></p>
               <img className="h-5 mx-4" src={assets.stripe_logo} alt="" />
             </div>
-            <div onClick={()=>setMethod('razorpay')}  className="flex items-center gap-3 border p-2 px-3 cursor-pointer">
-              <p className={`min-w-3.5 h-3.5 border rounded-full ${method === 'razorpay' ? 'bg-green-400' : ''}  `}></p>
-              <img className="h-5 mx-4" src={assets.razorpay_logo} alt="" />
-            </div>
+          +
             <div  onClick={()=>setMethod('cod')} className="flex items-center gap-3 border p-2 px-3 cursor-pointer">
               <p className={`min-w-3.5 h-3.5 border rounded- ${method === 'cod' ? 'bg-green-400' : ''}`}></p>
             <p className="text-gray-500 text-sm font-medium mx-4 ">CASH ON DELIVERY</p>
